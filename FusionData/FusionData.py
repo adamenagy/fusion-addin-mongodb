@@ -3,12 +3,20 @@
 
 import adsk.core, adsk.fusion, adsk.cam, traceback
 
+# Makes sure that additional modules stored inside the
+# add-in folder will be found
 import os, sys
-my_addin_path = os.path.dirname(os.path.realpath(__file__)) 
+my_addin_path = os.path.dirname(os.path.realpath(__file__)) + '/modules' 
 if not my_addin_path in sys.path:
    sys.path.append(my_addin_path) 
    
 import pymongo
+
+# Makes sure that our path is removed so that other add-ins
+# won't accidentally load something from our folders
+if my_addin_path in sys.path:
+   sys.path.remove(my_addin_path)
+   
 uri = 'connection string'
 # something like 'mongodb://<user name>:<user password>@<server id>.mlab.com:43734/fusion-data'
 
